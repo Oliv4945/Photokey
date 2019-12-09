@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name TP4056)(type Legacy)(uri ${KIPRJMOD}/Libs/TP4056.lib)(options "")(descr ""))
+  (lib (name PMIC-LDO-XC6206P332MR-G_SOT23_)(type Legacy)(uri ${KIPRJMOD}/Libs/PMIC-LDO-XC6206P332MR-G_SOT23_.lib)(options "")(descr ""))
+)

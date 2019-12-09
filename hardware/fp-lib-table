@@ -1,0 +1,7 @@
+(fp_lib_table
+  (lib (name TP4056)(type Legacy)(uri ${KIPRJMOD}/Libs/TP4056.mod)(options "")(descr ""))
+  (lib (name PMIC-LDO-XC6206P332MR-G_SOT23_)(type Legacy)(uri ${KIPRJMOD}/Libs/PMIC-LDO-XC6206P332MR-G_SOT23_.mod)(options "")(descr ""))
+  (lib (name Tag-Connect)(type Legacy)(uri ${KIPRJMOD}/Libs/Tag-Connect.mod)(options "")(descr ""))
+  (lib (name Dianwei)(type KiCad)(uri ${KIPRJMOD}/Libs/Dianwei.pretty)(options "")(descr ""))
+  (lib (name BatteryHolder)(type KiCad)(uri ${KIPRJMOD}/Libs/BatteryHolder.pretty)(options "")(descr ""))
+)
