@@ -925,7 +925,7 @@ U 1 1 5DF7FAFB
 P 8950 1800
 F 0 "J1" H 8842 3085 50  0000 C CNN
 F 1 "eink" H 8842 2994 50  0000 C CNN
-F 2 "" H 8950 1800 50  0001 C CNN
+F 2 "Dianwei:FPC_24" H 8950 1800 50  0001 C CNN
 F 3 "../documentation/24 Pins 0.5mm Pitch ZIF Connector Drawing.pdf" H 8950 1800 50  0001 C CNN
 	1    8950 1800
 	-1   0    0    -1  
