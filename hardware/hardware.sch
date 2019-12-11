@@ -110,10 +110,10 @@ L Device:L L1
 U 1 1 5DE83E4B
 P 4300 1250
 F 0 "L1" V 4490 1250 50  0000 C CNN
-F 1 "10uA" V 4399 1250 50  0000 C CNN
+F 1 "10 uH" V 4399 1250 50  0000 C CNN
 F 2 "Inductor_SMD:L_1210_3225Metric" H 4300 1250 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Murata-Electronics-LQH32PN100MNCL_C86073.pdf" H 4300 1250 50  0001 C CNN
-F 4 "C86073" V 4300 1250 50  0001 C CNN "LCSC"
+F 3 "https://datasheet.lcsc.com/szlcsc/Murata-Electronics-LQH32CN100K33L_C86069.pdf" H 4300 1250 50  0001 C CNN
+F 4 "C86069" V 4300 1250 50  0001 C CNN "LCSC"
 	1    4300 1250
 	0    -1   -1   0   
 $EndComp
@@ -527,62 +527,53 @@ Connection ~ 1800 3700
 $Comp
 L Device:LED_Small D2
 U 1 1 5DEC3843
-P 1300 3800
-F 0 "D2" V 1300 3700 50  0000 R CNN
-F 1 "RED" V 1200 3750 50  0000 R CNN
-F 2 "Diode_SMD:D_0603_1608Metric" V 1300 3800 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Hubei-KENTO-Elec-KT-0603R_C2286.pdf" V 1300 3800 50  0001 C CNN
-F 4 "C2286" V 1300 3800 50  0001 C CNN "LCSC"
-	1    1300 3800
-	0    -1   -1   0   
+P 1600 4000
+F 0 "D2" H 1550 3950 50  0000 R CNN
+F 1 "RED" H 1550 4050 50  0000 R CNN
+F 2 "Diode_SMD:D_0603_1608Metric" V 1600 4000 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/Hubei-KENTO-Elec-KT-0603R_C2286.pdf" V 1600 4000 50  0001 C CNN
+F 4 "C2286" V 1600 4000 50  0001 C CNN "LCSC"
+	1    1600 4000
+	-1   0    0    1   
 $EndComp
 $Comp
 L Device:R_Small R2
 U 1 1 5DEC54FA
-P 1700 4000
-F 0 "R2" V 1650 3800 50  0000 C CNN
-F 1 "2k" V 1750 3800 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" H 1700 4000 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF2001TCE_C4109.pdf" H 1700 4000 50  0001 C CNN
-F 4 "C4109" V 1700 4000 50  0001 C CNN "LCSC"
-	1    1700 4000
-	0    1    1    0   
+P 1400 3800
+F 0 "R2" H 1300 3850 50  0000 C CNN
+F 1 "2k" H 1300 3750 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" H 1400 3800 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF2001TCE_C4109.pdf" H 1400 3800 50  0001 C CNN
+F 4 "C4109" V 1400 3800 50  0001 C CNN "LCSC"
+	1    1400 3800
+	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	1000 3700 1300 3700
 $Comp
 L Device:LED_Small D1
 U 1 1 5DECE3AB
-P 1000 4000
-F 0 "D1" V 1046 3932 50  0000 R CNN
-F 1 "GREEN" V 955 3932 50  0000 R CNN
-F 2 "Diode_SMD:D_0603_1608Metric" V 1000 4000 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Everlight-Elec-19-217-GHC-YR1S2-3T_C72043.pdf" V 1000 4000 50  0001 C CNN
-F 4 "C72043" V 1000 4000 50  0001 C CNN "LCSC"
-	1    1000 4000
-	0    -1   -1   0   
+P 1450 4200
+F 0 "D1" H 1400 4150 50  0000 R CNN
+F 1 "GREEN" H 1400 4250 50  0000 R CNN
+F 2 "Diode_SMD:D_0603_1608Metric" V 1450 4200 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/Everlight-Elec-19-217-GHC-YR1S2-3T_C72043.pdf" V 1450 4200 50  0001 C CNN
+F 4 "C72043" V 1450 4200 50  0001 C CNN "LCSC"
+	1    1450 4200
+	-1   0    0    1   
 $EndComp
-Connection ~ 1300 3700
-Wire Wire Line
-	1300 3700 1800 3700
-Wire Wire Line
-	1600 4000 1300 4000
-Wire Wire Line
-	1300 4000 1300 3900
 Wire Wire Line
 	1000 3900 1000 3700
 Connection ~ 1000 3700
 $Comp
 L Device:R_Small R1
 U 1 1 5DED5C57
-P 1450 4200
-F 0 "R1" V 1400 4000 50  0000 C CNN
-F 1 "2k" V 1500 4000 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric" H 1450 4200 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF2001TCE_C4109.pdf" H 1450 4200 50  0001 C CNN
-F 4 "C4109" V 1450 4200 50  0001 C CNN "LCSC"
-	1    1450 4200
-	0    1    1    0   
+P 1000 4000
+F 0 "R1" H 900 4050 50  0000 C CNN
+F 1 "2k" H 900 3950 50  0000 C CNN
+F 2 "Resistor_SMD:R_0402_1005Metric" H 1000 4000 50  0001 C CNN
+F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF2001TCE_C4109.pdf" H 1000 4000 50  0001 C CNN
+F 4 "C4109" V 1000 4000 50  0001 C CNN "LCSC"
+	1    1000 4000
+	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	1550 4200 1800 4200
@@ -941,7 +932,7 @@ SPI_SCK
 Wire Wire Line
 	2750 2150 3450 2150
 Text Label 2850 2150 0    50   ~ 0
-EINK_CS
+EINK_BUSY
 Wire Wire Line
 	2750 2450 3450 2450
 Text Label 2850 2450 0    50   ~ 0
@@ -963,7 +954,7 @@ EINK_DC
 Wire Wire Line
 	2750 1750 3450 1750
 Text Label 2850 1550 0    50   ~ 0
-EINK_BUSY
+EINK_CS
 Wire Wire Line
 	5800 4000 5800 3700
 Wire Wire Line
@@ -1435,4 +1426,15 @@ F 3 "~" H 2650 5500 50  0001 C CNN
 	1    2450 5500
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	1000 3700 1400 3700
+Connection ~ 1400 3700
+Wire Wire Line
+	1400 3700 1800 3700
+Wire Wire Line
+	1800 4000 1700 4000
+Wire Wire Line
+	1500 4000 1400 4000
+Wire Wire Line
+	1400 4000 1400 3900
 $EndSCHEMATC
