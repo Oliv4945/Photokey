@@ -1025,10 +1025,10 @@ L Device:R_Small R9
 U 1 1 5E0A3D22
 P 1600 5500
 F 0 "R9" V 1404 5500 50  0000 C CNN
-F 1 "150k" V 1495 5500 50  0000 C CNN
+F 1 "15k" V 1495 5500 50  0000 C CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" H 1600 5500 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF1503TCE_C25755.pdf" H 1600 5500 50  0001 C CNN
-F 4 "C25755" V 1600 5500 50  0001 C CNN "LCSC"
+F 3 "" H 1600 5500 50  0001 C CNN
+F 4 "C25756" V 1600 5500 50  0001 C CNN "LCSC"
 	1    1600 5500
 	0    1    1    0   
 $EndComp
@@ -1037,10 +1037,10 @@ L Device:R_Small R10
 U 1 1 5E0A9583
 P 1950 5650
 F 0 "R10" H 2009 5696 50  0000 L CNN
-F 1 "422k" H 2009 5605 50  0000 L CNN
+F 1 "39k" H 2009 5605 50  0000 L CNN
 F 2 "Resistor_SMD:R_0402_1005Metric" H 1950 5650 50  0001 C CNN
-F 3 "https://datasheet.lcsc.com/szlcsc/Uniroyal-Elec-0402WGF4223TCE_C60390.pdf" H 1950 5650 50  0001 C CNN
-F 4 "C60390" H 1950 5650 50  0001 C CNN "LCSC"
+F 3 "" H 1950 5650 50  0001 C CNN
+F 4 "C25783" H 1950 5650 50  0001 C CNN "LCSC"
 	1    1950 5650
 	1    0    0    -1  
 $EndComp
@@ -1055,11 +1055,6 @@ Wire Wire Line
 	1700 5500 1950 5500
 Wire Wire Line
 	1950 5500 1950 5550
-Wire Wire Line
-	1950 5500 2450 5500
-Connection ~ 1950 5500
-Text Label 2200 5500 0    50   ~ 0
-VBAT
 $Comp
 L Memory_EEPROM:CAT24C256 U3
 U 1 1 5E0D44E3
@@ -1209,9 +1204,6 @@ Wire Wire Line
 	7550 5200 8100 5200
 Text Label 7600 5200 0    50   ~ 0
 TX
-Connection ~ 800  5850
-Wire Wire Line
-	800  5850 1950 5850
 Wire Wire Line
 	1950 5750 1950 5850
 $Comp
@@ -1352,7 +1344,6 @@ Wire Wire Line
 Wire Wire Line
 	1550 900  1900 900 
 NoConn ~ 1750 2350
-NoConn ~ 1750 2450
 $Comp
 L Connector:Conn_01x02_Male J3
 U 1 1 5DFDB34E
@@ -1415,17 +1406,6 @@ $EndComp
 Wire Wire Line
 	8300 3700 8050 3700
 Connection ~ 8050 3700
-$Comp
-L Connector:TestPoint_Alt TP1
-U 1 1 5E03CE53
-P 2450 5500
-F 0 "TP1" H 2508 5618 50  0000 L CNN
-F 1 "TP_VBAT" H 2508 5527 50  0000 L CNN
-F 2 "TestPoint:TestPoint_Pad_D1.5mm" H 2650 5500 50  0001 C CNN
-F 3 "~" H 2650 5500 50  0001 C CNN
-	1    2450 5500
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1000 3700 1400 3700
 Connection ~ 1400 3700
@@ -1437,4 +1417,17 @@ Wire Wire Line
 	1500 4000 1400 4000
 Wire Wire Line
 	1400 4000 1400 3900
+Connection ~ 1950 5500
+Wire Wire Line
+	1950 5500 2450 5500
+Text Label 2200 5500 0    50   ~ 0
+VBAT
+Wire Wire Line
+	1750 2450 1200 2450
+Text Label 1250 2450 0    50   ~ 0
+VBAT_ON
+Wire Wire Line
+	1950 5850 2450 5850
+Text Label 2050 5850 0    50   ~ 0
+VBAT_ON
 $EndSCHEMATC
