@@ -41,3 +41,5 @@ out/
 
 # End of https://www.gitignore.io/api/kicad
 
+!hardware_bom_jlc.csv
+!hardware_cpl_jlc.csv
