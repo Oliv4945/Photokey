@@ -28,6 +28,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "eeprom.h"
 
 /* USER CODE END Includes */
 
@@ -101,6 +102,12 @@ int main(void)
 
   // TODO: Read to be tested
   battery_value = read_battery();
+  eeprom_write_byte(0x00, 0x12);
+  eeprom_write_byte(0x01, 0x23);
+  eeprom_write_byte(0x02, 0x56);
+  uint8_t buffer[3];
+  eeprom_read_bytes(0x00, buffer, 3);
+  HAL_Delay(10);
 
   /* USER CODE END 2 */
 
