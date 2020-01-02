@@ -1,4 +1,13 @@
 *.sch-bak
+software/build
+
+# Inspired from gitignore.io
+software/.vscode/*
+!software/.vscode/settings.json
+!software/.vscode/tasks.json
+!software/.vscode/launch.json
+!software/.vscode/extensions.json
+software/.history
 
 # Created by https://www.gitignore.io/api/kicad
 # Edit at https://www.gitignore.io/?templates=kicad
