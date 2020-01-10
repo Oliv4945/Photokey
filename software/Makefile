@@ -66,7 +66,10 @@ Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c \
-Src/system_stm32l0xx.c
+Src/system_stm32l0xx.c \
+epd/epd.c \
+Display_EPD_W21_spi.c \
+Display_EPD_W21.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -127,7 +130,8 @@ C_INCLUDES =  \
 -IDrivers/STM32L0xx_HAL_Driver/Inc \
 -IDrivers/STM32L0xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32L0xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-Iepd/
 
 
 # compile gcc flags

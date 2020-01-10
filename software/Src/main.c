@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "eeprom.h"
+#include "epd.h"
 
 /* USER CODE END Includes */
 
@@ -109,6 +110,18 @@ int main(void)
   eeprom_read_bytes(0x00, buffer, 3);
   HAL_Delay(10);
 
+  // EPD test
+  EPD_init_4Gray(); //EPD init 4 Gray
+  full_display(pic_4bit);
+  EPD_sleep(); //Enter deep sleep mode
+	HAL_Delay(30);
+		
+  //4 gray picture
+  EPD_init_4Gray(); //EPD init 4 Gray
+  full_display(pic_display_4bit); //pic1
+  EPD_sleep(); //Enter deep sleep mode
+  HAL_Delay(30);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -179,7 +192,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+  while(1);
   /* USER CODE END Error_Handler_Debug */
 }
 
