@@ -32,11 +32,11 @@ void SPI_Write(unsigned char value)
 		driver_delay_us(1);
         EPD_W21_CLK_1; 
         SPI_Delay(1);
-    }*/
-
+    }
+*/
 	if (HAL_SPI_Transmit(&hspi1, &value, 1, 1000) != HAL_OK) {
-    Error_Handler();
-  }
+      Error_Handler();
+  	}
 }
 
 void EPD_W21_WriteCMD(unsigned char command)
