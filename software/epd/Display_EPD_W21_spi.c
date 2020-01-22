@@ -4,18 +4,19 @@
 void SPI_Delay(unsigned char xrate)
 {
 	unsigned char i;
-	while(xrate)
+	/*while(xrate)
 	{
 		for(i=0;i<EPD_W21_SPI_SPEED;i++);
 		xrate--;
-	}
+	}*/
+	HAL_Delay(1);
 }
 
 
 void SPI_Write(unsigned char value)                                    
 {                                                           
-    /*unsigned char i;
-
+    unsigned char i;
+/*
 	
 	SPI_Delay(1);
     for(i=0; i<8; i++)   
