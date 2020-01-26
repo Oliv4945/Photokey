@@ -2,6 +2,8 @@
 #include "Display_EPD_W21_spi.h"
 #include "Display_EPD_W21.h"
 #include "Ap_29demo.h"
+#include "terre.h"
+
 
 #include <stdint.h>
 typedef uint32_t u32;
@@ -15,130 +17,75 @@ unsigned char HRES,VRES_byte1,VRES_byte2;
       white  gray1  gray2  black
 0x10|  ff     ff     00     00
 0x13|  ff     00     ff     00
-                                   ****************/
-void pic_4bit(void)
-{
-		unsigned int i,r,t,y;
-		
-		EPD_W21_WriteCMD(0x10);	  	
-		for(y=0;y<722;y++)	     
-		{
-			EPD_W21_WriteDATA(0xff);  //white
-		}  
-		for(t=0;t<722;t++)	     
-		{
-			EPD_W21_WriteDATA(0xff);  //gray1
-		}  
-		for(r=0;r<722;r++)	     
-		{
-			EPD_W21_WriteDATA(0x00);  //gray2
-		}  
-		for(i=0;i<722;i++)	     
-		{
-			EPD_W21_WriteDATA(0x00);  //black
-		}  
-		EPD_W21_WriteCMD(0x13);
-		for(i=0;i<722;i++)	     
-		{
-			EPD_W21_WriteDATA(0xff);  //white
-		}  
-		for(r=0;r<722;r++)	     
-		{
-			EPD_W21_WriteDATA(0x00); //gray1
-		}  
-		for(t=0;t<722;t++)	     
-		{
-			EPD_W21_WriteDATA(0xff);  //gray2
-		}  
-		for(y=0;y<722;y++)	     
-		{
-			EPD_W21_WriteDATA(0x00); //black
-		}  
-	
+****************/
+
+void pic_earth(void) {
+	EPD_W21_WriteCMD(0x10);
+	uint8_t byte_out = 7;
+	uint8_t pixel = 0;
+	for (uint16_t i = 0; i<152*152/4; i++) {
+		for (int8_t b = 6; b >= -1; b -= 2) {
+			//for (int8_t j = 1; j >= -1; j--) {
+				switch ((image[i]>>(b)) & 0x03) {
+					case 0:
+						pixel |= (0 << byte_out);
+						break;
+					case 1:
+						pixel |= (0 << byte_out);
+						break;
+					case 2:
+						pixel |= (1 << byte_out);
+						break;
+					case 3:
+						pixel |= (1 << byte_out);
+						break;
+				}
+				byte_out--;
+			//}
+		}
+		if (i%2 == 1) {
+			EPD_W21_WriteDATA(pixel);
+			byte_out = 7;
+			pixel = 0;
+		}
+	}
+	EPD_W21_WriteCMD(0x13);
+	byte_out = 7;
+	for (uint16_t i = 0; i<152*152/4; i++) {
+		for (int8_t b = 6; b >= -1; b -= 2) {
+			//for (int8_t j = 1; j >= -1; j--) {
+				switch ((image[i]>>(b)) & 0x03) {
+					case 0:
+						pixel |= (0 << byte_out);
+						break;
+					case 1:
+						pixel |= (1 << byte_out);
+						break;
+					case 2:
+						pixel |= (0 << byte_out);
+						break;
+					case 3:
+						pixel |= (1 << byte_out);
+						break;
+				}
+				byte_out--;
+			//}
+		}
+		if (i%2 == 1) {
+			EPD_W21_WriteDATA(pixel);
+			byte_out = 7;
+			pixel = 0;
+		}
+	}
+
 }
-//4 grayscale demo function
+
 /********Color display description
       white  gray1  gray2  black
-0x10|  01     01     00     00
-0x13|  01     00     01     00
+0x10|  ff     ff     00     00
+0x13|  ff     00     ff     00
                                    ****************/
-void pic_display_4bit (void)
-{
-  u32 i,j;
-	u8 temp1,temp2,temp3;
 
-	  //old  data
-		EPD_W21_WriteCMD(0x10);	       
-
-		for(i=0;i<2888;i++)	               //2888*4  152*152
-		{ 
-			temp3=0;
-      for(j=0;j<4;j++)	
-			{
-				temp1 = gImage_1[i*4+j];
-				temp2 = temp1&0xF0 ;
-				if(temp2 == 0xF0)
-					temp3 |= 0x01;//white
-				else if(temp2 == 0x00)
-					temp3 |= 0x00;  //black
-				else if((temp2>0xA0)&&(temp2<0xF0)) 
-					temp3 |= 0x01;  //gray1
-				else 
-					temp3 |= 0x00; //gray2
-				temp3 <<= 1;	
-				temp1 <<= 4;
-				temp2 = temp1&0xF0 ;
-				if(temp2 == 0xF0)  //white
-					temp3 |= 0x01;
-				else if(temp2 == 0x00) //black
-					temp3 |= 0x00;
-				else if((temp2>0xA0)&&(temp2<0xF0))
-					temp3 |= 0x01; //gray1
-				else    
-						temp3 |= 0x00;	//gray2	
-        if(j!=3)					
-			  temp3 <<= 1;	
-				
-			
-		 }	
-       	EPD_W21_WriteDATA(temp3);			
-		}
-    //new  data
-		EPD_W21_WriteCMD(0x13);	       
-
-		for(i=0;i<2888;i++)	               //2888*4   152*152
-		{ 
-			temp3=0;
-      for(j=0;j<4;j++)	
-			{
-				temp1 = gImage_1[i*4+j];
-				temp2 = temp1&0xF0 ;
-				if(temp2 == 0xF0)
-					temp3 |= 0x01;//white
-				else if(temp2 == 0x00)
-					temp3 |= 0x00;  //black
-				else if((temp2>0xA0)&&(temp2<0xF0)) 
-					temp3 |= 0x00;  //gray1
-				else 
-					temp3 |= 0x01; //gray2
-				temp3 <<= 1;	
-				temp1 <<= 4;
-				temp2 = temp1&0xF0 ;
-				if(temp2 == 0xF0)  //white
-					temp3 |= 0x01;
-				else if(temp2 == 0x00) //black
-					temp3 |= 0x00;
-				else if((temp2>0xA0)&&(temp2<0xF0)) 
-					temp3 |= 0x00;//gray1
-				else    
-						temp3 |= 0x01;	//gray2
-        if(j!=3)				
-			  temp3 <<= 1;				
-			
-		 }	
-       	EPD_W21_WriteDATA(temp3);			
-		}
-}
 
 
 /*************************EPD display init function******************************************************/

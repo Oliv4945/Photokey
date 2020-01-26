@@ -104,13 +104,18 @@ int main(void)
 
   // TODO: Read to be tested
   battery_value = read_battery();
-  eeprom_write_byte(0x00, 0x12);
-  eeprom_write_byte(0x01, 0x23);
-  eeprom_write_byte(0x02, 0x56);
-  uint8_t buffer[3];
-  eeprom_read_bytes(0x00, buffer, 3);
-  HAL_Delay(10);
+  //eeprom_write_byte(0x00, 0x12);
+  //eeprom_write_byte(0x01, 0x23);
+  //eeprom_write_byte(0x02, 0x56);
+  //uint8_t buffer[3];
+  //eeprom_read_bytes(0x00, buffer, 3);
 
+// EPD test
+  EPD_init_4Gray(); //EPD init 4 Gray
+  full_display(pic_earth);
+  EPD_sleep(); //Enter deep sleep mode
+	HAL_Delay(30);
+/*
   // EPD test
   EPD_init_4Gray(); //EPD init 4 Gray
   full_display(pic_4bit);
@@ -122,7 +127,7 @@ int main(void)
   full_display(pic_display_4bit); //pic1
   EPD_sleep(); //Enter deep sleep mode
   HAL_Delay(30);
-
+*/
   /* USER CODE END 2 */
 
   /* Infinite loop */
