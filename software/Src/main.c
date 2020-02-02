@@ -29,7 +29,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "eeprom.h"
-#include "epd.h"
+// #include "epd.h"
+#include "epaper.h" 
+#include "picture.h"
+#include "terre.h"
 
 /* USER CODE END Includes */
 
@@ -110,24 +113,19 @@ int main(void)
   //uint8_t buffer[3];
   //eeprom_read_bytes(0x00, buffer, 3);
 
-// EPD test
+  // EPD 4 greyscale test
+  /*
   EPD_init_4Gray(); //EPD init 4 Gray
   full_display(pic_earth);
   EPD_sleep(); //Enter deep sleep mode
 	HAL_Delay(30);
-/*
-  // EPD test
-  EPD_init_4Gray(); //EPD init 4 Gray
-  full_display(pic_4bit);
-  EPD_sleep(); //Enter deep sleep mode
-	HAL_Delay(30);
-		
-  //4 gray picture
-  EPD_init_4Gray(); //EPD init 4 Gray
-  full_display(pic_display_4bit); //pic1
-  EPD_sleep(); //Enter deep sleep mode
-  HAL_Delay(30);
-*/
+  */
+
+  // EPD Black white
+  EPD_HW_Init(); //Electronic paper initialization
+  EPD_WhiteScreen_ALL(image); //Refresh the picture in full screen
+  EPD_DeepSleep();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
