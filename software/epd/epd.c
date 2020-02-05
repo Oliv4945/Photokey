@@ -31,10 +31,10 @@ void pic_earth(void) {
 						pixel |= (0 << byte_out);
 						break;
 					case 1:
-						pixel |= (0 << byte_out);
+						pixel |= (1 << byte_out);
 						break;
 					case 2:
-						pixel |= (1 << byte_out);
+						pixel |= (0 << byte_out);
 						break;
 					case 3:
 						pixel |= (1 << byte_out);
@@ -56,10 +56,10 @@ void pic_earth(void) {
 			//for (int8_t j = 1; j >= -1; j--) {
 				switch ((image[i]>>(b)) & 0x03) {
 					case 0:
-						pixel |= (0 << byte_out);
+						pixel |= (1 << byte_out);
 						break;
 					case 1:
-						pixel |= (1 << byte_out);
+						pixel |= (0 << byte_out);
 						break;
 					case 2:
 						pixel |= (0 << byte_out);
@@ -111,7 +111,7 @@ void EPD_init_4Gray(void)
 		lcd_chkstatus();
 		
 		EPD_W21_WriteCMD(0x00);			//panel setting
-		EPD_W21_WriteDATA(0x3f);		//KW-3f   KWR-2F	BWROTP 0f	BWOTP 1f
+		EPD_W21_WriteDATA(0x37);		//KW-3f   KWR-2F	BWROTP 0f	BWOTP 1f
 		
 		EPD_W21_WriteCMD(0x30);			//PLL setting
 		EPD_W21_WriteDATA (0x3c);      	//100hz 

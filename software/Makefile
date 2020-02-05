@@ -67,8 +67,8 @@ Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c \
 Src/system_stm32l0xx.c \
 epd/epd.c \
-Display_EPD_W21_spi.c \
-Display_EPD_W21.c
+epd/Display_EPD_W21_spi.c \
+epd/Display_EPD_W21.c
 
 # ASM sources
 ASM_SOURCES =  \

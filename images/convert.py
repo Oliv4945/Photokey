@@ -68,7 +68,7 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
             # width * pixels per bytes / 2 bit per pixel
             if (i % int(bmp_width * bmp_bits_per_pixel / 8 / 2) == 0):
                 if i != 0:
-                    image.insert(0, line)
+                    image.append(line)
                     print(line)
                     print(len(image), len(line), i, int(bmp_width * bmp_bits_per_pixel / 8 / 2))
                     line = []
@@ -91,7 +91,7 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
         print(table)
         print(f"Table size: {len(table)}")
 
-        image.insert(0, line)
+        image.append(line)
 
         print(len(image))
         for line in image:
