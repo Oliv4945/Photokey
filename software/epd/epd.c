@@ -28,7 +28,7 @@ void pic_earth(void) {
 			//for (int8_t j = 1; j >= -1; j--) {
 				switch ((image[i]>>(b)) & 0x03) {
 					case 0:
-						pixel |= (0 << byte_out);
+						pixel |= (1 << byte_out);
 						break;
 					case 1:
 						pixel |= (1 << byte_out);
@@ -37,7 +37,7 @@ void pic_earth(void) {
 						pixel |= (0 << byte_out);
 						break;
 					case 3:
-						pixel |= (1 << byte_out);
+						pixel |= (0 << byte_out);
 						break;
 				}
 				byte_out--;
@@ -62,10 +62,10 @@ void pic_earth(void) {
 						pixel |= (0 << byte_out);
 						break;
 					case 2:
-						pixel |= (0 << byte_out);
+						pixel |= (1 << byte_out);
 						break;
 					case 3:
-						pixel |= (1 << byte_out);
+						pixel |= (0 << byte_out);
 						break;
 				}
 				byte_out--;

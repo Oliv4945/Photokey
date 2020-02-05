@@ -41,45 +41,65 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
     _ = int.from_bytes(image_bmp.read(2), "little")
     bmp_bits_per_pixel = int.from_bytes(image_bmp.read(2), "little")
     bmp_compression_method = int.from_bytes(image_bmp.read(4), "little")
-    _ = int.from_bytes(image_bmp.read(4), "little")
-    _ = int.from_bytes(image_bmp.read(4), "little")
-    _ = int.from_bytes(image_bmp.read(4), "little")
-    _ = int.from_bytes(image_bmp.read(4), "little")
-    _ = int.from_bytes(image_bmp.read(4), "little")
+    _ = int.from_bytes(image_bmp.read(4), "little") # 0x22
+    _ = int.from_bytes(image_bmp.read(4), "little") # 0x26
+    _ = int.from_bytes(image_bmp.read(4), "little") # 0x2A
+    color_table_size = int.from_bytes(image_bmp.read(4), "little") # 0x2E
+    _ = int.from_bytes(image_bmp.read(4), "little") # 0x32
     print(f"dib_size: {dib_size} bytes")
     print(f"Image width: {bmp_width} px\t\theight: {bmp_height} px")
     print(f"bmp_bits_per_pixel: {bmp_bits_per_pixel}")
     print(f"bmp_compression_method: {bmp_compression_method}")
+    print(f"color_table_size: {color_table_size}")
+    # TODO - 122 is empirical...
+    image_bmp.seek(122)
+    table_color = {}
+    know_color = {
+        255: 0, # WHITE
+        160: 1, # GREY 1
+        78: 2,  # GREY 2
+        0: 3,   # BLACK
+    }
+
+    for i in range(color_table_size):
+        red = int.from_bytes(image_bmp.read(1), "little")
+        green = int.from_bytes(image_bmp.read(1), "little")
+        blue = int.from_bytes(image_bmp.read(1), "little")
+        _ = int.from_bytes(image_bmp.read(1), "little")
+        table_color[i] = know_color[red]
+    print("table_color", table_color)
+
+
     if bmp_compression_method != 0:
         raise ValueError(
             f"BMP compression method '{bmp_compression_method}' is not supported"
         )
 
     # Read data
+    print("Cursor", image_bmp.tell())
     image_bmp.seek(bmp_data_offset)
-    with open("~/Downloads/test.h", "w") as file_out:
-        file_out.write(f"uint8_t image[] = {{\n")
+    with open("/home/oliv/Downloads/test.h", "w") as file_out:
+        file_out.write(f"uint8_t image[] = {{")
 
         table = {}
-        line = []
-        image = []
 
         for i in range(int(bmp_width * bmp_height * bmp_bits_per_pixel / 8 / 2)):
             # width * pixels per bytes / 2 bit per pixel
             if (i % int(bmp_width * bmp_bits_per_pixel / 8 / 2) == 0):
-                if i != 0:
-                    image.append(line)
-                    print(line)
-                    print(len(image), len(line), i, int(bmp_width * bmp_bits_per_pixel / 8 / 2))
-                    line = []
+                # Insert new line at each end of row
+                file_out.write("\n")
 
             pixels = int.from_bytes(image_bmp.read(2), "big")
             pixel1 = (pixels >> 12) & 0x0F
+            pixel1 = table_color[pixel1]
             pixel2 = (pixels >> 8) & 0x0F
+            pixel2 = table_color[pixel2]
             pixel3 = (pixels >> 4) & 0x0F
+            pixel3 = table_color[pixel3]
             pixel4 = (pixels >> 0) & 0x0F
+            pixel4 = table_color[pixel4]
             byte_out = (pixel1 << 6) | (pixel2 << 4) | (pixel3 << 2) | pixel4
-            line.append(byte_out)
+            file_out.write(f"0x{byte_out:02X}, ")
             
             
 
@@ -87,17 +107,12 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
             table[f"{pixel2:02X}"] = table.get(f"{pixel2:02X}", 0) + 1
             table[f"{pixel3:02X}"] = table.get(f"{pixel3:02X}", 0) + 1
             table[f"{pixel4:02X}"] = table.get(f"{pixel4:02X}", 0) + 1
-        
+
+        # End of file
+        file_out.write("\n};")
+
         print(table)
         print(f"Table size: {len(table)}")
-
-        image.append(line)
-
-        print(len(image))
-        for line in image:
-            for byte in line:
-                file_out.write(f"0x{byte:02X}, ")
-            file_out.write("\n")
-
-        file_out.write("\n};")
+        sum_pixels = table["00"]+table["01"]+table["02"]+table["03"]
+        print(f"Pixels: {sum_pixels}")
 
