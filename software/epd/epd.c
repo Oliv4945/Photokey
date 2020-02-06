@@ -21,70 +21,15 @@ unsigned char HRES,VRES_byte1,VRES_byte2;
 
 void pic_earth(void) {
 	EPD_W21_WriteCMD(0x10);
-	uint8_t byte_out = 7;
-	uint8_t pixel = 0;
-	for (uint16_t i = 0; i<152*152/4; i++) {
-		for (int8_t b = 6; b >= -1; b -= 2) {
-			//for (int8_t j = 1; j >= -1; j--) {
-				switch ((image[i]>>(b)) & 0x03) {
-					case 0:
-						pixel |= (1 << byte_out);
-						break;
-					case 1:
-						pixel |= (1 << byte_out);
-						break;
-					case 2:
-						pixel |= (0 << byte_out);
-						break;
-					case 3:
-						pixel |= (0 << byte_out);
-						break;
-				}
-				byte_out--;
-			//}
-		}
-		if (i%2 == 1) {
-			EPD_W21_WriteDATA(pixel);
-			byte_out = 7;
-			pixel = 0;
-		}
+	for (uint16_t i = 0; i<152*152/8; i++) {
+		EPD_W21_WriteDATA(image10[i]);
 	}
+
 	EPD_W21_WriteCMD(0x13);
-	byte_out = 7;
-	for (uint16_t i = 0; i<152*152/4; i++) {
-		for (int8_t b = 6; b >= -1; b -= 2) {
-			//for (int8_t j = 1; j >= -1; j--) {
-				switch ((image[i]>>(b)) & 0x03) {
-					case 0:
-						pixel |= (1 << byte_out);
-						break;
-					case 1:
-						pixel |= (0 << byte_out);
-						break;
-					case 2:
-						pixel |= (1 << byte_out);
-						break;
-					case 3:
-						pixel |= (0 << byte_out);
-						break;
-				}
-				byte_out--;
-			//}
-		}
-		if (i%2 == 1) {
-			EPD_W21_WriteDATA(pixel);
-			byte_out = 7;
-			pixel = 0;
-		}
+	for (uint16_t i = 0; i<152*152/8; i++) {
+		EPD_W21_WriteDATA(image13[i]);
 	}
-
 }
-
-/********Color display description
-      white  gray1  gray2  black
-0x10|  ff     ff     00     00
-0x13|  ff     00     ff     00
-                                   ****************/
 
 
 

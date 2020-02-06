@@ -53,12 +53,21 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
     print(f"color_table_size: {color_table_size}")
     # TODO - 122 is empirical...
     image_bmp.seek(122)
-    table_color = {}
-    know_color = {
-        255: 0, # WHITE
+    table_color_10 = {}
+    table_color_13 = {}
+
+    know_color_10 = {
+        255: 1, # WHITE
         160: 1, # GREY 1
-        78: 2,  # GREY 2
-        0: 3,   # BLACK
+        78: 0,  # GREY 2
+        0: 0,   # BLACK
+    }
+    
+    know_color_13 = {
+        255: 1, # WHITE
+        160: 0, # GREY 1
+        78: 1,  # GREY 2
+        0: 0,   # BLACK
     }
 
     for i in range(color_table_size):
@@ -66,8 +75,10 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
         green = int.from_bytes(image_bmp.read(1), "little")
         blue = int.from_bytes(image_bmp.read(1), "little")
         _ = int.from_bytes(image_bmp.read(1), "little")
-        table_color[i] = know_color[red]
-    print("table_color", table_color)
+        table_color_10[i] = know_color_10[red]
+        table_color_13[i] = know_color_13[red]
+    print("table_color_10", table_color_10)
+    print("table_color_13", table_color_13)
 
 
     if bmp_compression_method != 0:
@@ -76,43 +87,34 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
         )
 
     # Read data
-    print("Cursor", image_bmp.tell())
     image_bmp.seek(bmp_data_offset)
+
+    image_10 = "uint8_t image10[] = {"
+    image_13 = "uint8_t image13[] = {"
+    for i in range(int(bmp_width * bmp_height * bmp_bits_per_pixel / 8 / bmp_bits_per_pixel)):
+        # width * pixels per bytes / 2 bit per pixel
+        if (i % int(bmp_width * bmp_bits_per_pixel / 8 / bmp_bits_per_pixel) == 0):
+            # Insert new line at each end of row
+            image_10 += "\n\t"
+            image_13 += "\n\t"
+
+        pixels = int.from_bytes(image_bmp.read(4), "big")
+        # Iterate on bits
+        byte_10 = byte_13 = 0
+        for i in range (4*8-bmp_bits_per_pixel, -1, -bmp_bits_per_pixel):
+            pixel = (pixels >> i) & 0x0F
+            byte_10 = (byte_10 << 1) | table_color_10[pixel]
+            byte_13 = (byte_13 << 1) | table_color_13[pixel]
+        image_10 += f"0x{byte_10:02X}, "
+        image_13 += f"0x{byte_13:02X}, "
+        byte_10 = byte_13 = 0
+
+    # End of file
+    image_10 += "\n};"
+    image_13 += "\n};"
+
     with open("/home/oliv/Downloads/test.h", "w") as file_out:
-        file_out.write(f"uint8_t image[] = {{")
-
-        table = {}
-
-        for i in range(int(bmp_width * bmp_height * bmp_bits_per_pixel / 8 / 2)):
-            # width * pixels per bytes / 2 bit per pixel
-            if (i % int(bmp_width * bmp_bits_per_pixel / 8 / 2) == 0):
-                # Insert new line at each end of row
-                file_out.write("\n")
-
-            pixels = int.from_bytes(image_bmp.read(2), "big")
-            pixel1 = (pixels >> 12) & 0x0F
-            pixel1 = table_color[pixel1]
-            pixel2 = (pixels >> 8) & 0x0F
-            pixel2 = table_color[pixel2]
-            pixel3 = (pixels >> 4) & 0x0F
-            pixel3 = table_color[pixel3]
-            pixel4 = (pixels >> 0) & 0x0F
-            pixel4 = table_color[pixel4]
-            byte_out = (pixel1 << 6) | (pixel2 << 4) | (pixel3 << 2) | pixel4
-            file_out.write(f"0x{byte_out:02X}, ")
-            
-            
-
-            table[f"{pixel1:02X}"] = table.get(f"{pixel1:02X}", 0) + 1
-            table[f"{pixel2:02X}"] = table.get(f"{pixel2:02X}", 0) + 1
-            table[f"{pixel3:02X}"] = table.get(f"{pixel3:02X}", 0) + 1
-            table[f"{pixel4:02X}"] = table.get(f"{pixel4:02X}", 0) + 1
-
-        # End of file
-        file_out.write("\n};")
-
-        print(table)
-        print(f"Table size: {len(table)}")
-        sum_pixels = table["00"]+table["01"]+table["02"]+table["03"]
-        print(f"Pixels: {sum_pixels}")
-
+        file_out.write("#include <stdint.h>\n\n")
+        file_out.write(image_10)
+        file_out.write("\n\n\n")
+        file_out.write(image_13)
