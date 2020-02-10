@@ -132,6 +132,22 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_ADCEx_DisableVREFINT();
+  HAL_ADC_DeInit(&hadc);
+  HAL_ADC_MspDeInit(&hadc);
+  HAL_SPI_MspDeInit(&hspi1);
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  GPIO_InitStruct.Pin = 0xFFFFU;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+__HAL_RCC_GPIOA_CLK_DISABLE();
+__HAL_RCC_GPIOB_CLK_DISABLE();
+__HAL_RCC_GPIOC_CLK_DISABLE();
+__HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+  HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_STOPENTRY_WFI);
   while (1)
   {
     /* USER CODE END WHILE */
