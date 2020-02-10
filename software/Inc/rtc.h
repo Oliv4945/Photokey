@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : SYS.h
+  * File Name          : RTC.h
   * Description        : This file provides code for the configuration
-  *                      of the SYS instances.
+  *                      of the RTC instances.
   ******************************************************************************
   * @attention
   *
@@ -17,8 +17,8 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __sys_H
-#define __sys_H
+#ifndef __rtc_H
+#define __rtc_H
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -30,11 +30,13 @@
 
 /* USER CODE END Includes */
 
+extern RTC_HandleTypeDef hrtc;
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_SYS_Init(void);
+void MX_RTC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -43,7 +45,7 @@ void MX_SYS_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ sys_H */
+#endif /*__ rtc_H */
 
 /**
   * @}

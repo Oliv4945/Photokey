@@ -29,6 +29,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_hal.h"
+#include "stm32l0xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -54,7 +55,9 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void enter_stop_mode(void);
+void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc);
+void set_rtc_alarm(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
