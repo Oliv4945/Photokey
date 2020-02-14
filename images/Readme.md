@@ -1,4 +1,7 @@
 # Setup
-Install [PythonMagick] (https://wiki.python.org/moin/ImageMagick) from [source](http://www.imagemagick.org/download/python/) or your distribution package manager.  
+No setup required
 
-* Debian: `apt install python3-pythonmagick`
+# Usage
+```
+python convert.py /path/to/.4_colors/image.bmp
+```
