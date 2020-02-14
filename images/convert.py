@@ -1,28 +1,27 @@
 import binascii
-import PythonMagick
+# import PythonMagick
 
+
+
+source_folder = "/home/oliv/Documents/"
+image_file_in = f"{source_folder}/images/noe_pecor2.bmp"
+
+# PythonMagic is not used for for now, dithering is better from Gimp
 # http://www.imagemagick.org/Magick++/Image++.html
-
-
-image_file_in = "~/Downloads/temp.bmp"
-
+"""
 image = PythonMagick.Image()
 image.read(image_file_in)
-
-print(f"Input\nWidth: {image.columns()}\tHeight: {image.rows()}")
-
 image.magick("BMP")
 image.resize("152")
 image.quantizeColorSpace(PythonMagick.ColorspaceType.GRAYColorspace)
 image.quantizeColors(4)
 image.quantizeDither(True)
 image.quantize()
+image.write(f"{source_folder}/images/useless.bmp")
+"""
 
-image.write("~/Downloads/4032-3024-max.bmp")
-
-print(f"\nOutput\nWidth: {image.columns()}\tHeight: {image.rows()}")
-
-with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
+with open(image_file_in, "rb") as image_bmp:
+# with open("/home/oliv/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
     # Read header
     bmp_type = image_bmp.read(2)
     bmp_size = int.from_bytes(image_bmp.read(4), "little")
@@ -113,7 +112,7 @@ with open("~/Downloads/4032-3024-max.bmp", "rb") as image_bmp:
     image_10 += "\n};"
     image_13 += "\n};"
 
-    with open("/home/oliv/Downloads/test.h", "w") as file_out:
+    with open(image_file_in.replace(".bmp", ".h"), "w") as file_out:
         file_out.write("#include <stdint.h>\n\n")
         file_out.write(image_10)
         file_out.write("\n\n\n")
