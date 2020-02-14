@@ -1,5 +1,8 @@
 *.sch-bak
 software/build
+images/*.bmp
+images/*.h
+.venv
 
 # Inspired from gitignore.io
 software/.vscode/*
