@@ -13,7 +13,7 @@ void eeprom_write_byte(uint16_t address, uint8_t data)
     eeprom_read_bytes(0x00, &data, 1);
 }
 
-void eeprom_read_bytes(uint16_t address, uint8_t *data, uint8_t size)
+void eeprom_read_bytes(uint16_t address, uint8_t *data, uint16_t size)
 {
     if (HAL_I2C_Mem_Read(&hi2c1, EEPROM_I2C_ADDRESS, address, I2C_MEMADD_SIZE_16BIT, data, size, EEPROM_TIMEOUT) != HAL_OK)
     {

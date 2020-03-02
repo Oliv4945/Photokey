@@ -13,7 +13,7 @@ extern "C"
 #define EEPROM_TIMEOUT 1000
 
     void eeprom_write_byte(uint16_t address, uint8_t data);
-    void eeprom_read_bytes(uint16_t address, uint8_t *data, uint8_t size);
+    void eeprom_read_bytes(uint16_t address, uint8_t *data, uint16_t size);
 
 #ifdef __cplusplus
 }
