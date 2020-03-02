@@ -31,6 +31,24 @@ void pic_earth(void) {
 }
 
 
+void pic_from_buffer(uint8_t opcode, uint8_t *buffer) {
+	
+	EPD_W21_WriteCMD(opcode);
+	for (uint16_t i = 0; i<152*152/8; i++) {
+		EPD_W21_WriteDATA(buffer[i]);
+	}
+
+}
+
+void epd_update() {
+	lut(); //Power settings
+	EPD_W21_WriteCMD(0x12);			//DISPLAY REFRESH
+	driver_delay_xms(100);	    //!!!The delay here is necessary, 200uS at least!!!
+	lcd_chkstatus();
+}
+
+
+
 
 /*************************EPD display init function******************************************************/
 void EPD_init_4Gray(void)

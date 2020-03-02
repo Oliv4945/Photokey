@@ -29,8 +29,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
 #include "eeprom.h"
 #include "epd.h"
+#include "terre.h"
+#include "Display_EPD_W21_spi.h"
+#include "Display_EPD_W21.h"
 
 /* USER CODE END Includes */
 
@@ -53,6 +57,13 @@
 
 /* USER CODE BEGIN PV */
 volatile uint8_t alarm = 1;
+const uint16_t image_size = 5776; // 152*152*2/8
+const uint16_t used_slots = 2;
+
+
+extern uint8_t image10[];
+extern uint8_t image13[];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,6 +86,8 @@ int main(void)
   /* USER CODE BEGIN 1 */
   // TODO: volatile to be removed after test
   volatile float battery_value;
+  uint8_t image[image_size/2+255];
+  volatile uint8_t slot;
 
   /* USER CODE END 1 */
   
@@ -106,11 +119,7 @@ int main(void)
 
   // TODO: Read to be tested
   battery_value = read_battery();
-  //eeprom_write_byte(0x00, 0x12);
-  //eeprom_write_byte(0x01, 0x23);
-  //eeprom_write_byte(0x02, 0x56);
-  //uint8_t buffer[3];
-  //eeprom_read_bytes(0x00, buffer, 3);
+  // writeImage(0);
 
 // EPD test
 /*
@@ -133,16 +142,35 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
     if (alarm == 1) {
       alarm = 0;
       EPD_init_4Gray(); //EPD init 4 Gray
-      full_display(pic_earth);
-      EPD_sleep(); //Enter deep sleep mode
+
+      // full_display(pic_earth);
+      
+      slot = rand() % used_slots;
+      EPD_W21_WriteCMD(0x10);
+
+      uint16_t i;
+
+      
+      for (i = 0; i < image_size/2; i+=255) {
+        eeprom_read_bytes(slot * image_size+i, image+i, 255);
+      }
+      pic_from_buffer(0x10, image);
+      for (i = 0; i < image_size/2; i+=255) {
+        eeprom_read_bytes(slot * image_size+i+image_size/2, image+i, 255);
+      }
+      pic_from_buffer(0x13, image);
+
+      epd_update();
+      
+      EPD_sleep();
       set_rtc_alarm();
       // enter_stop_mode();
     }
-    /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 }
@@ -250,6 +278,18 @@ void set_rtc_alarm(void) {
     Error_Handler();
   }
 }
+
+
+void writeImage(uint8_t slot) {
+  for (uint32_t i = 0; i < ((uint32_t) image_size/2); i++) {
+    eeprom_write_byte(i + slot * image_size, image10[i]);
+  }
+  for (uint32_t i = 0; i < image_size/2; i++) {
+    eeprom_write_byte(i+ image_size/2 + slot * image_size, image13[i]);
+  }
+}
+
+
 /* USER CODE END 4 */
 
 /**

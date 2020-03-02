@@ -22,6 +22,8 @@ void lcd_chkstatus(void);
 void EPD_init_4Gray(void);//EPD init 4 Gray
 void full_display(void pic_display(void)); //full  display
 void pic_earth(void);
+void pic_from_buffer(uint8_t opcode, uint8_t *buffer);
+void epd_update();
 //void pic_display_4bit(void);
 //void pic_4bit(void);
 void lut(void);

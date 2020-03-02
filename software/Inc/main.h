@@ -58,6 +58,7 @@ void Error_Handler(void);
 void enter_stop_mode(void);
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc);
 void set_rtc_alarm(void);
+void writeImage(uint8_t slot);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
